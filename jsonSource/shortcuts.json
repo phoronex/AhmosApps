@@ -3,7 +3,7 @@
     "index": 1,
     "groupBy": "General",
     "key": "CTRL + SHIFT + V",
-    "descriptionAr": "لسرغة إدخال البيانات داخل النماذج",
+    "descriptionAr": "لسرعة إدخال البيانات داخل النماذج",
     "descriptionEn": "General Paste inside any form",
     "details": "يستخدم هذا الأختصار للإدخال السريع عل كل النماذج ويتم تفعيل الأمر المناسب\n This shortcut is used on all over the app forms for easy data entry.",
     "images": [
@@ -14,156 +14,157 @@
     "index": 2,
     "groupBy": "General",
     "key": "CTRL + SHIFT + C",
-    "descriptionAr": "فتح نافذة البحث في السجلات",
-    "descriptionEn": "Open search window for records"
+    "descriptionAr": "مسح سجلات النماذج",
+    "descriptionEn": "Clear Form Records"
   },
   {
     "index": 3,
-    "groupBy": "General",
+    "groupBy": "Wasl_Team_Only",
     "key": "CTRL + SHIFT + D",
-    "descriptionAr": "إنشاء سجل جديد",
-    "descriptionEn": "Create a new record",
-    "details": "Quickly create a new record in the current form without using the mouse.",
+    "descriptionAr": "للصق بيانات المركبات مع أسم السائق داخل النموذج الرئيسي",
+    "descriptionEn": "To paste the vehicle data with driver name to the main form",
     "images": []
   },
   {
     "index": 4,
-    "groupBy": "General",
+    "groupBy": "Wasl_Team_Only",
     "key": "CTRL + SHIFT + E",
-    "descriptionAr": "حفظ السجل الحالي",
-    "descriptionEn": "Save current record"
+    "descriptionAr": "تصدير ملفات ربط وصل",
+    "descriptionEn": "Export Wasl Link Sheets"
   },
   {
     "index": 5,
-    "groupBy": "General",
+    "groupBy": "PRO",
     "key": "CTRL + G",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "مراجعة بيانات الجهاز والحساسات",
+    "descriptionEn": "Device sensors revision",
+    "details": "قم بنسخ رقم جهاز واحد او أكثر ثم أضغط علي الاختصار لإنتاج التقرير\nCopy one or more device, then press the shortcut to generate the report"
   },
   {
     "index": 6,
-    "groupBy": "General",
+    "groupBy": "PRO",
     "key": "CTRL + SHIFT + G",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "مراجعة بيانات الجهاز والحساسات - النموذج القديم",
+    "descriptionEn": "Device sensors revision - old template",
+    "details": "قم بنسخ رقم جهاز واحد او أكثر ثم أضغط علي الاختصار لإنتاج التقرير\nCopy one or more device, then press the shortcut to generate the report"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 7,
+    "groupBy": "Wasl_Team_Only",
     "key": "CTRL + SHIFT + H",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لتصدير تقرير الرد الخاص بالمركبات المربوطة",
+    "descriptionEn": "To Export the linked vehicles HTML Report"
   },
   {
-    "index": 6,
+    "index": 8,
     "groupBy": "General",
     "key": "CTRL + H",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "استدعاء قائمة بسجل العمليات الأخيرة",
+    "descriptionEn": "Retrieve a list of recent transactions."
   },
   {
-    "index": 6,
+    "index": 9,
     "groupBy": "General",
     "key": "CTRL + L",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "إستدعاء نتيجة أخر عملية",
+    "descriptionEn": "Retrieve the last operation result"
   },
   {
-    "index": 6,
+    "index": 10,
     "groupBy": "General",
     "key": "CTRL + SHIFT + N",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لإضافة فاصلة بعد أرقام الأجهزة",
+    "descriptionEn": "Add Comma after Device IMEI"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 11,
+    "groupBy": "App_Size_Position",
     "key": "CTRL + SHIFT + o",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "أبقِ التطبيق دائمًا في مقدمة التطبيقات الأخرى",
+    "descriptionEn": "Keep the app always on top of other applications"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 12,
+    "groupBy": "CRM",
     "key": "CTRL + SHIFT + P",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "للبحث بلوحات المركبات علي الـ CRM",
+    "descriptionEn": "Search with plates on CRM"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 13,
+    "groupBy": "PRO",
     "key": "CTRL + P",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "للبحث بلوحات المركبات علي حساب عميل علي الـ PRO",
+    "descriptionEn": "Search with plates on PRO"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 14,
+    "groupBy": "CRM",
     "key": "CTRL + SHIFT + S",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لحفظ ثم عرض بيانات طلب إيقاف الخدمة ولصق الأجهزة بالمحفظة",
+    "descriptionEn": "To save and preview a stop service details and paste All IMEI to the clipboard"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 15,
+    "groupBy": "CRM",
     "key": "CTRL + SHIFT + T",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لحفظ ثم عرض بيانات طلب نقل الأجهزة ولصق الأجهزة بالمحفظة",
+    "descriptionEn": "To save and preview a TSU details and paste All IMEI to the clipboard"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 16,
+    "groupBy": "Wasl_Team_Only",
     "key": "CTRL + SHIFT + Y",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لمعالجة بيانات الشركة وتجهيزها لسهولة الأستخدام",
+    "descriptionEn": "Prepare company data to make it ready for easy use"
   },
   {
-    "index": 6,
+    "index": 17,
     "groupBy": "General",
     "key": "CTRL + SHIFT + F6",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لعرض قائمة ببعض الوظائف الهامة",
+    "descriptionEn": "To show a list of some important Features"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 18,
+    "groupBy": "App_Size_Position",
     "key": "CTRL + SHIFT + F10",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لتصغير مقاسات البرنامج ليتناسب مع الشاشات الصغيرة",
+    "descriptionEn": "Make the app Smaller for small screens"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 19,
+    "groupBy": "App_Size_Position",
     "key": "CTRL + 0",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لتحديث وقراءة بيانات الشاشات خاصة عند توصيل شاشة جديدة",
+    "descriptionEn": "Refresh And read screens setting especially when you connect a new one"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 20,
+    "groupBy": "App_Size_Position",
     "key": "CTRL + SHIFT + 1",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لضبط موضع التطبيق على الشاشة رقم 1",
+    "descriptionEn": "Adjust the app position to screen no.1"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 21,
+    "groupBy": "App_Size_Position",
     "key": "CTRL + SHIFT + 2",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لضبط موضع التطبيق على الشاشة رقم 2",
+    "descriptionEn": "Adjust the app position to screen no.2"
   },
   {
-    "index": 6,
-    "groupBy": "General",
+    "index": 22,
+    "groupBy": "App_Size_Position",
     "key": "CTRL + SHIFT + 3",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لضبط موضع التطبيق على الشاشة رقم 3",
+    "descriptionEn": "Adjust the app position to screen no.3"
   },
   {
-    "index": 6,
+    "index": 23,
     "groupBy": "General",
     "key": "CTRL + SHIFT + 7",
-    "descriptionAr": "تحديث البيانات",
-    "descriptionEn": "Refresh data"
+    "descriptionAr": "لتحويل أي جدول لصفحة HTML",
+    "descriptionEn": "Convert any table to HTML"
   }
 ]
