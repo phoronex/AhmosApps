@@ -1096,39 +1096,6 @@
         // ============================================
         // EMBEDDED DATA FUNCTION (for offline use)
         // ============================================
-        // ============================================
-        // UTILITY: Export Embedded Data to JSON Files
-        // ============================================
-        function exportEmbeddedDataToJSON() {
-            if (typeof getEmbeddedData !== 'function') {
-                alert('getEmbeddedData function not found!');
-                return;
-            }
-
-            const data = getEmbeddedData();
-
-            // Helper function to download JSON
-            function downloadJSON(filename, content) {
-                const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = filename;
-                a.click();
-                URL.revokeObjectURL(url);
-            }
-
-            // Download each file
-            downloadJSON('downloads.json', data.downloads);
-            downloadJSON('shortcuts.json', data.shortcuts);
-            downloadJSON('bookmarklets.json', data.bookmarklets);
-            downloadJSON('links.json', data.links);
-            downloadJSON('codes.json', data.codes);
-            downloadJSON('aboutImages.json', data.aboutImages);
-
-            alert('✓ All JSON files downloaded! Check your Downloads folder.');
-            console.log('✓ Exported 6 JSON files successfully');
-        }
 
         function getEmbeddedData() {
             return {
