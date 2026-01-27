@@ -1,26 +1,34 @@
 [
   {
     "name": "Ahmos Key",
-	"version": "2.1",
-	"released": "18-12-2025",
-    "description": "To Open The AhmosApps Data File",
-    "link32": "https://www.mediafire.com/file/q63mewytlzwoilg/AhmosKey_V2.1_32x_18-12-2025.rar/file",
-    "link64": "https://www.mediafire.com/file/08s5fr37v1n8by4/AhmosKey_V2.1_64x_18-12-2025.rar/file"
+    "version": "2.1",
+    "released": "18-12-2025",
+    "description": "To open The AhmosApp Data File",
+    "link32": "",
+    "link64": ""
   },
   {
-    "name": "Ahmos APP",
-	"version": "7.3",
-	"released": "05-01-2026",
+    "name": "Ahmos App",
+    "version": "7.3",
+    "released": "05-01-2026",
     "description": "Automate many Wasl operations",
-    "link32": "https://github.com/yourusername/yourrepo/releases/download/v1.0/app2-32bit.zip",
-    "link64": "https://github.com/yourusername/yourrepo/releases/download/v1.0/app2-64bit.zip"
+    "link32": "",
+    "link64": ""
   },
   {
     "name": "Ahmos DataBase",
-	"version": "7.3",
-	"released": "05-01-2026",
+    "version": "7.3",
+    "released": "05-01-2026",
     "description": "Automate many System operations",
-    "link32": "https://github.com/yourusername/yourrepo/releases/download/v1.0/app3-32bit.zip",
-    "link64": "https://github.com/yourusername/yourrepo/releases/download/v1.0/app3-64bit.zip"
+    "link32": "",
+    "link64": ""
+  },
+  {
+    "name": "Ahmos Codes",
+    "version": "4.6",
+    "released": "14-01-2026",
+    "description": "🔥 Excel Macros Just try it",
+    "link32": "https://www.mediafire.com/file/vtcc9pyubuj94vs/AhmosCodes_V4.6.rar/file",
+    "link64": "https://www.mediafire.com/file/vtcc9pyubuj94vs/AhmosCodes_V4.6.rar/file"
   }
 ]
