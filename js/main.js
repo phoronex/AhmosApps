@@ -305,18 +305,41 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Image Modal Functions
+// Image Modal Functions (WITH ZOOM FIX)
 function openModal(imageSrc) {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
-    modal.classList.add('active');
+
+    if (!modal || !modalImg) return;
+
+    // Reset zoom state on new open
+    modalImg.classList.remove('zoomed');
+
+    modal.style.display = "flex";
+    // Allow time for display:flex to apply before adding active class for animation
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+
     modalImg.src = imageSrc;
+    document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
     const modal = document.getElementById('imageModal');
-    modal.classList.remove('active');
+    const modalImg = document.getElementById('modalImage');
+
+    if (modalImg) modalImg.classList.remove('zoomed');
+
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }, 300);
+    }
 }
+
 
 // Load Downloads
 function loadDownloads() {
@@ -689,7 +712,30 @@ function copyCode(index) {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.modal-close');
     loadAllData();
+
+    if (modal && modalImg) {
+        // Click Image to Zoom
+        modalImg.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent closing modal
+            this.classList.toggle('zoomed');
+        });
+
+        // Click Background to Close
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Click X to Close
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        }
+    }
 
     // Add click event listeners for date/time copying
     document.getElementById('gregorianDate').addEventListener('click', function () {
