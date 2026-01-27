@@ -93,36 +93,6 @@
       }
     ]
   },
-  /*
-  {
-    "title": "Custom Formula with Checkbox",
-    "template": "=IF({{useAdvanced}}, {{advancedFormula}}, {{simpleFormula}})",
-    "variables": [
-      {
-        "name": "useAdvanced",
-        "label": "Use Advanced Formula",
-        "type": "checkbox",
-        "default": false,
-        "trueValue": "TRUE",
-        "falseValue": "FALSE"
-      },
-      {
-        "name": "advancedFormula",
-        "label": "Advanced Formula",
-        "type": "text",
-        "placeholder": "Complex calculation",
-        "default": "SUM(A1:A10)*1.2"
-      },
-      {
-        "name": "simpleFormula",
-        "label": "Simple Formula",
-        "type": "text",
-        "placeholder": "Basic calculation",
-        "default": "SUM(A1:A10)"
-      }
-    ]
-  },
-  */
   {
     "title": "Simple VLOOKUP with Options",
     "template": "=VLOOKUP({{searchValue}}, {{tableRange}}, {{columnIndex}}, {{matchType}})",
