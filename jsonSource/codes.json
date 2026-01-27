@@ -93,6 +93,7 @@
       }
     ]
   },
+  /*
   {
     "title": "Custom Formula with Checkbox",
     "template": "=IF({{useAdvanced}}, {{advancedFormula}}, {{simpleFormula}})",
@@ -121,8 +122,9 @@
       }
     ]
   },
+  */
   {
-    "title": "VLOOKUP with Options",
+    "title": "Simple VLOOKUP with Options",
     "template": "=VLOOKUP({{searchValue}}, {{tableRange}}, {{columnIndex}}, {{matchType}})",
     "variables": [
       {
