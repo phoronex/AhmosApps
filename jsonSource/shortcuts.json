@@ -1,0 +1,169 @@
+[
+  {
+    "index": 1,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + V",
+    "descriptionAr": "لسرغة إدخال البيانات داخل النماذج",
+    "descriptionEn": "General Paste inside any form",
+    "details": "يستخدم هذا الأختصار للإدخال السريع عل كل النماذج ويتم تفعيل الأمر المناسب\n This shortcut is used on all over the app forms for easy data entry.",
+    "images": [
+      "appImages/gPasteEx.gif"
+    ]
+  },
+  {
+    "index": 2,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + C",
+    "descriptionAr": "فتح نافذة البحث في السجلات",
+    "descriptionEn": "Open search window for records"
+  },
+  {
+    "index": 3,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + D",
+    "descriptionAr": "إنشاء سجل جديد",
+    "descriptionEn": "Create a new record",
+    "details": "Quickly create a new record in the current form without using the mouse.",
+    "images": []
+  },
+  {
+    "index": 4,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + E",
+    "descriptionAr": "حفظ السجل الحالي",
+    "descriptionEn": "Save current record"
+  },
+  {
+    "index": 5,
+    "groupBy": "General",
+    "key": "CTRL + G",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + G",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + H",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + H",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + L",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + N",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + o",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + P",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + P",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + S",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + T",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + Y",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + F6",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + F10",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + 0",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + 1",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + 2",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + 3",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  },
+  {
+    "index": 6,
+    "groupBy": "General",
+    "key": "CTRL + SHIFT + 7",
+    "descriptionAr": "تحديث البيانات",
+    "descriptionEn": "Refresh data"
+  }
+]

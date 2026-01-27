@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Toggle Flowise Chatbot Visibility",
+    "description": "This bookmarklet allows you to hide or show the Flowise chatbot widget on any webpage. Simply click the bookmark to toggle the visibility. Perfect for taking screenshots or presenting without distractions.",
+    "code": "javascript:(function(){const e=document.querySelector('flowise-chatbot');if(!e)return alert('Flowise not found');const s=e.style.display==='none';e.style.display=s?'':'none';if(e.shadowRoot){const r=e.shadowRoot;r.host.style.display=s?'':'none';const t=r.querySelectorAll('*');t.forEach(x=>x.style.display=s?'':'none');}console.log('Flowise '+ (s?'shown':'hidden'));})();"
+  },
+  {
+    "title": "Example JSON Viewer",
+    "description": "This bookmarklet formats and displays JSON data in a readable format on the current page. Useful for developers working with APIs.",
+    "code": "javascript:(function(){try{const data=prompt('Paste your JSON:');if(data){const formatted=JSON.stringify(JSON.parse(data),null,2);const w=window.open('');w.document.write('<pre>'+formatted+'</pre>');}}catch(e){alert('Invalid JSON: '+e.message);}})();"
+  }
+]

@@ -1,0 +1,161 @@
+[
+  {
+    "title": "Calculate Days Between Two Dates (Simple)",
+    "template": "=IF(COUNT({{startCell}}:{{endCell}})=2,DAYS({{endCell}},{{startCell}}), IF(COUNT({{startCell}}:{{endCell}})=1,\"missingDate\",\"\"))",
+    "variables": [
+      {
+        "name": "startCell",
+        "label": "Start Cell",
+        "type": "text",
+        "placeholder": "e.g., A3",
+        "default": "A3"
+      },
+      {
+        "name": "endCell",
+        "label": "End Cell",
+        "type": "text",
+        "placeholder": "e.g., B3",
+        "default": "B3"
+      }
+    ]
+  },
+  {
+    "title": "Calculate Days Between Request and Installation Dates",
+    "template": "=IF(AND(LEN([@[{{requestDateField}}]])>2,LEN([@[{{installDateField}}]])>2),\n    DAYS([@[{{installDateField}}]],[@[{{requestDateField}}]]),\n    IF(LEN([@[{{requestDateField}}]])>2,\n        \"missingInstallationDate\",\n        IF(LEN([@[{{installDateField}}]])>2,\n            \"missingCreationDate\",\n            \"\"\n        )\n    )\n)",
+    "variables": [
+      {
+        "name": "requestDateField",
+        "label": "Request Date Field",
+        "type": "text",
+        "placeholder": "e.g., Request & Creation Date",
+        "default": "Request & Creation Date"
+      },
+      {
+        "name": "installDateField",
+        "label": "Installation Date Field",
+        "type": "text",
+        "placeholder": "e.g., Installation Date",
+        "default": "Installation Date"
+      }
+    ]
+  },
+  {
+    "title": "Round Value to Nearest Multiple",
+    "template": "=ROUND(({{cellRef}} + {{addValue}})/{{multiple}}, 0) * {{multiple}}",
+    "variables": [
+      {
+        "name": "cellRef",
+        "label": "Cell Reference",
+        "type": "text",
+        "placeholder": "e.g., L2",
+        "default": "L2"
+      },
+      {
+        "name": "addValue",
+        "label": "Add Value",
+        "type": "text",
+        "placeholder": "e.g., 2500",
+        "default": "2500"
+      },
+      {
+        "name": "multiple",
+        "label": "Round to Multiple",
+        "type": "text",
+        "placeholder": "e.g., 500",
+        "default": "500"
+      }
+    ]
+  },
+  {
+    "title": "Conditional Formula Example",
+    "template": "=IF({{condition}}, {{trueValue}}, {{falseValue}})",
+    "variables": [
+      {
+        "name": "condition",
+        "label": "Condition",
+        "type": "text",
+        "placeholder": "e.g., A1>100",
+        "default": "A1>100"
+      },
+      {
+        "name": "trueValue",
+        "label": "True Value",
+        "type": "text",
+        "placeholder": "Value if true",
+        "default": "\"Pass\""
+      },
+      {
+        "name": "falseValue",
+        "label": "False Value",
+        "type": "text",
+        "placeholder": "Value if false",
+        "default": "\"Fail\""
+      }
+    ]
+  },
+  {
+    "title": "Custom Formula with Checkbox",
+    "template": "=IF({{useAdvanced}}, {{advancedFormula}}, {{simpleFormula}})",
+    "variables": [
+      {
+        "name": "useAdvanced",
+        "label": "Use Advanced Formula",
+        "type": "checkbox",
+        "default": false,
+        "trueValue": "TRUE",
+        "falseValue": "FALSE"
+      },
+      {
+        "name": "advancedFormula",
+        "label": "Advanced Formula",
+        "type": "text",
+        "placeholder": "Complex calculation",
+        "default": "SUM(A1:A10)*1.2"
+      },
+      {
+        "name": "simpleFormula",
+        "label": "Simple Formula",
+        "type": "text",
+        "placeholder": "Basic calculation",
+        "default": "SUM(A1:A10)"
+      }
+    ]
+  },
+  {
+    "title": "VLOOKUP with Options",
+    "template": "=VLOOKUP({{searchValue}}, {{tableRange}}, {{columnIndex}}, {{matchType}})",
+    "variables": [
+      {
+        "name": "searchValue",
+        "label": "Search Value",
+        "type": "text",
+        "placeholder": "e.g., A2",
+        "default": "A2"
+      },
+      {
+        "name": "tableRange",
+        "label": "Table Range",
+        "type": "text",
+        "placeholder": "e.g., Sheet2!A:B",
+        "default": "Sheet2!A:B"
+      },
+      {
+        "name": "columnIndex",
+        "label": "Column Index",
+        "type": "text",
+        "placeholder": "e.g., 2",
+        "default": "2"
+      },
+      {
+        "name": "matchType",
+        "label": "Match Type",
+        "type": "select",
+        "options": [
+          "FALSE",
+          "TRUE"
+        ],
+        "default": "FALSE"
+      }
+    ]
+  }
+]
