@@ -163,6 +163,265 @@ function initializeApp() {
 
 // Date and Time Functions
 
+// Convert Hijri to Julian Day
+function toJulianFromHijri(hYear, hMonth, hDay) {
+    // Hijri Epoch in Julian Day: July 16, 622 CE = 1948439.5
+    const epoch = 1948439.5;
+    // Length of a lunar year is approx 354.366 days
+    const yearInDays = (hYear - 1) * 354.366;
+
+    // Days in preceding months (approximate standard Hijri month lengths)
+    const monthLengths = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];
+    let daysInMonths = 0;
+    for (let i = 0; i < hMonth - 1; i++) {
+        daysInMonths += monthLengths[i];
+    }
+
+    return epoch + yearInDays + daysInMonths + hDay;
+}
+
+// Convert Julian Day to Gregorian
+function fromJulian(jd) {
+    let a = jd + 0.5;
+    let z = Math.floor(a);
+    let f = a - z;
+
+    let alpha = Math.floor((z - 1867216.25) / 36524.25);
+    let b = z + 1 + alpha - Math.floor(alpha / 4);
+
+    let c = b + 1524;
+    let d = Math.floor((c - 122.1) / 365.25);
+    let e = Math.floor(365.25 * d);
+    let g = Math.floor((c - e) / 30.6001);
+
+    let day = c - e - Math.floor(30.6001 * g);
+    let month = g - 1 - Math.floor(g / 14);
+    let year = d - 4716 - Math.floor((14 - month) / 12);
+
+    return { year, month, day };
+}
+
+// Main function: Hijri to Gregorian
+function toGregorian(hYear, hMonth, hDay) {
+    const jd = toJulianFromHijri(hYear, hMonth, hDay);
+    return fromJulian(jd);
+}
+
+let convertedData = [];
+
+// Month Names for Output
+const hijriMonthsAr = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+const hijriMonthsEn = ['Muharram', 'Safar', 'Rabi I', 'Rabi II', 'Jumada I', 'Jumada II', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qidah', 'Dhu al-Hijjah'];
+
+const gregorianMonthsAr = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+const gregorianMonthsEn = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+function convertDates() {
+    const input = document.getElementById('converterInput').value;
+    const offset = parseInt(document.getElementById('offsetDays').value) || 0;
+    const table = document.getElementById('resultsTable');
+    const tbody = document.getElementById('tableBody');
+    const status = document.getElementById('tableStatus');
+
+    tbody.innerHTML = '';
+    convertedData = [];
+
+    if (!input.trim()) {
+        status.style.display = 'block';
+        table.style.display = 'none';
+        status.textContent = 'Please enter at least one date.';
+        return;
+    }
+
+    const lines = input.split('\n');
+    let successCount = 0;
+
+    lines.forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        const result = parseAndConvert(trimmed, offset);
+
+        const tr = document.createElement('tr');
+
+        if (result) {
+            const entryFormatted = formatEntryFormatted(result.parsedDay, result.parsedMonth, result.parsedYear);
+
+            let f1, f2, f3, f4; // ISO, Numeric, AR, EN
+
+            if (result.isHijri) {
+                // Input Hijri -> Output Gregorian
+                const date = result.convertedDate;
+
+                f1 = `${date.year}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
+                f2 = `${String(date.day).padStart(2, '0')}-${String(date.month).padStart(2, '0')}-${date.year}`;
+                f3 = `${String(date.day).padStart(2, '0')} ${gregorianMonthsAr[date.month - 1]} ${date.year}`;
+                f4 = `${String(date.day).padStart(2, '0')} ${gregorianMonthsEn[date.month - 1]} ${date.year}`;
+
+                tr.innerHTML = `
+                    <td>${trimmed}</td>
+                    <td>${entryFormatted}</td>
+                    <td><span style="color:#ff7700; font-weight:bold;">Hijri</span></td>
+                    <td>${f1}</td>
+                    <td>${f2}</td>
+                    <td>${f3}</td>
+                    <td>${f4}</td>
+                `;
+                successCount++;
+            } else {
+                // Input Gregorian -> Output Hijri
+                const date = result.convertedDate;
+
+                f1 = `${date.year}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
+                f2 = `${String(date.day).padStart(2, '0')}-${String(date.month).padStart(2, '0')}-${date.year}`;
+                f3 = `${String(date.day).padStart(2, '0')} ${hijriMonthsAr[date.month - 1]} ${date.year}`;
+                f4 = `${String(date.day).padStart(2, '0')} ${hijriMonthsEn[date.month - 1]} ${date.year}`;
+
+                tr.innerHTML = `
+                    <td>${trimmed}</td>
+                    <td>${entryFormatted}</td>
+                    <td><span style="color:#0066cc; font-weight:bold;">Gregorian</span></td>
+                    <td>${f1}</td>
+                    <td>${f2}</td>
+                    <td>${f3}</td>
+                    <td>${f4}</td>
+                `;
+                successCount++;
+            }
+        } else {
+            tr.innerHTML = `
+                <td>${trimmed}</td>
+                <td>-</td>
+                <td>-</td>
+                <td colspan="4" style="color:red; text-align:center;">Invalid Format</td>
+            `;
+        }
+        tbody.appendChild(tr);
+    });
+
+    if (successCount > 0) {
+        status.style.display = 'none';
+        table.style.display = 'table';
+    } else {
+        status.style.display = 'block';
+        table.style.display = 'none';
+        status.textContent = 'No valid dates found. Try formats like: YYYY-MM-DD, DD/MM/YYYY, or "09 شعبان 1447"';
+    }
+}
+
+function formatEntryFormatted(day, month, year) {
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
+function parseAndConvert(dateString, offset) {
+    let day, month, year, isHijri;
+
+    // 1. Numeric Regex
+    const regexNumeric = /(\d{1,4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,4})/;
+    const matchNumeric = dateString.match(regexNumeric);
+
+    if (matchNumeric) {
+        let p1 = parseInt(matchNumeric[1]);
+        let p2 = parseInt(matchNumeric[2]);
+        let p3 = parseInt(matchNumeric[3]);
+
+        if (p1 > 31) { year = p1; month = p2; day = p3; }
+        else if (p3 > 31) { day = p1; month = p2; year = p3; }
+        else if (p3 > 1500) { day = p1; month = p2; year = p3; } // Gregorian
+        else if (p3 < 1500) { day = p1; month = p2; year = p3; } // Hijri
+        else { return null; }
+
+        const lowerStr = dateString.toLowerCase();
+        if (lowerStr.includes('hijri') || lowerStr.includes('هـ') || lowerStr.includes('ah')) isHijri = true;
+        else if (lowerStr.includes('gregorian') || lowerStr.includes('ميلادي')) isHijri = false;
+        else isHijri = (year < 1500);
+
+    } else {
+        // 2. Text Regex (Arabic months)
+        const regexText = /^(\d{1,2})\s+([a-zA-Z\u0600-\u06FF]+)\s+(\d{4})$/;
+        const matchText = dateString.match(regexText);
+
+        if (matchText) {
+            day = parseInt(matchText[1]);
+            const monthName = matchText[2].trim();
+            year = parseInt(matchText[3]);
+
+            const monthIndex = hijriMonthsAr.indexOf(monthName);
+            if (monthIndex !== -1) {
+                month = monthIndex + 1;
+                isHijri = true;
+            } else {
+                const enMonthIndex = hijriMonthsEn.map(m => m.toLowerCase()).indexOf(monthName.toLowerCase());
+                if (enMonthIndex !== -1) {
+                    month = enMonthIndex + 1;
+                    isHijri = true;
+                } else {
+                    return null;
+                }
+            }
+        } else {
+            return null;
+        }
+    }
+
+    if (month < 1 || month > 12) return null;
+    if (day < 1 || day > 31) return null;
+
+    let convertedDate;
+
+    if (isHijri) {
+        const gDate = toGregorian(year, month, day + offset);
+        convertedDate = gDate;
+    } else {
+        const jsDate = new Date(year, month - 1, day + offset);
+        convertedDate = toHijri(jsDate);
+    }
+
+    return {
+        parsedDay: day,
+        parsedMonth: month,
+        parsedYear: year,
+        isHijri: isHijri,
+        convertedDate: convertedDate
+    };
+}
+
+function exportTable() {
+    const table = document.getElementById('resultsTable');
+    if (table.style.display === 'none') {
+        if (typeof showToast === 'function') showToast('Please convert dates first!', 'error');
+        else alert('Please convert dates first!');
+        return;
+    }
+
+    // FIX: Removed the URI prefix that was causing the issue
+    let csvContent = "";
+
+    // Headers
+    csvContent += "Entry\teFormatted\tType\tFormat1\tFormat2\tFormat3(AR)\tFormat4(EN)\n";
+
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const cols = row.querySelectorAll('td');
+        let rowData = [];
+        cols.forEach((col, index) => {
+            // Clean up text
+            let text = col.innerText.replace(/\n/g, ' ').trim();
+            // If cell is empty (invalid dates), just tab
+            rowData.push(text);
+        });
+        csvContent += rowData.join("\t") + "\n";
+    });
+
+    navigator.clipboard.writeText(csvContent).then(() => {
+        if (typeof showToast === 'function') showToast('Table copied to clipboard!', 'success');
+        else alert('Table copied successfully!');
+    }).catch(err => {
+        console.error('Could not copy text: ', err);
+        if (typeof showToast === 'function') showToast('Copy failed', 'error');
+    });
+}
+
 
 function updateDateTime() {
     const now = new Date();
@@ -768,3 +1027,4 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Time Copied to clipboard!', 'success');
     });
 });
+
