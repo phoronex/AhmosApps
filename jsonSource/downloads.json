@@ -9,16 +9,16 @@
   },
   {
     "name": "Ahmos App",
-    "version": "7.3",
-    "released": "05-01-2026",
+    "version": "7.5",
+    "released": "28-01-2026",
     "description": "Automate many Wasl operations",
     "link32": "",
     "link64": ""
   },
   {
     "name": "Ahmos DataBase",
-    "version": "7.3",
-    "released": "05-01-2026",
+    "version": "7.5",
+    "released": "28-01-2026",
     "description": "Automate many System operations",
     "link32": "",
     "link64": ""
