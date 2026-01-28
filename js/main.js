@@ -259,12 +259,12 @@ function convertDates() {
                 f4 = `${String(date.day).padStart(2, '0')} ${gregorianMonthsEn[date.month - 1]} ${date.year}`;
 
                 tr.innerHTML = `
-                    <td>${trimmed}</td>
+                    <td dir="auto">${trimmed}</td>
                     <td>${entryFormatted}</td>
                     <td><span style="color:#ff7700; font-weight:bold;">Hijri</span></td>
                     <td>${f1}</td>
                     <td>${f2}</td>
-                    <td>${f3}</td>
+                    <td dir="rtl">${f3}</td>
                     <td>${f4}</td>
                 `;
                 successCount++;
@@ -278,19 +278,19 @@ function convertDates() {
                 f4 = `${String(date.day).padStart(2, '0')} ${hijriMonthsEn[date.month - 1]} ${date.year}`;
 
                 tr.innerHTML = `
-                    <td>${trimmed}</td>
+                    <td dir="auto">${trimmed}</td>
                     <td>${entryFormatted}</td>
                     <td><span style="color:#0066cc; font-weight:bold;">Gregorian</span></td>
                     <td>${f1}</td>
                     <td>${f2}</td>
-                    <td>${f3}</td>
+                    <td dir="rtl">${f3}</td>
                     <td>${f4}</td>
                 `;
                 successCount++;
             }
         } else {
             tr.innerHTML = `
-                <td>${trimmed}</td>
+                <td dir="auto">${trimmed}</td>
                 <td>-</td>
                 <td>-</td>
                 <td colspan="4" style="color:red; text-align:center;">Invalid Format</td>
@@ -1059,5 +1059,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Time Copied to clipboard!', 'success');
     });
 });
+
 
 
