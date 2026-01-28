@@ -1194,6 +1194,7 @@ footer {
     border-bottom: 1px solid #eee;
     white-space: nowrap;
     color: #444;
+    text-align: left;
 }
 
 .results-table tr:nth-child(even) {
@@ -1218,3 +1219,4 @@ footer {
     color: #155724 !important;
     transition: background-color 0.3s;
 }
+
