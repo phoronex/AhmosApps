@@ -974,8 +974,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImage');
     const closeBtn = document.querySelector('.modal-close');
+    const tbody = document.getElementById('tableBody');
     loadAllData();
 
+    if (tbody) {
+        tbody.addEventListener('click', function (e) {
+            // Check if user clicked inside a TD (data cell)
+            if (e.target.tagName === 'TD') {
+                const cell = e.target;
+                const textToCopy = cell.innerText;
+
+                // Copy to clipboard
+                navigator.clipboard.writeText(textToCopy).then(() => {
+
+                    // 1. Show Toast (if you have the function)
+                    if (typeof showToast === 'function') {
+                        showToast('Copied: ' + textToCopy, 'success');
+                    } else {
+                        // Fallback alert if toast isn't set up
+                        console.log('Copied: ' + textToCopy);
+                    }
+
+                    // 2. Flash the cell green briefly
+                    cell.classList.add('copied-flash');
+                    setTimeout(() => {
+                        cell.classList.remove('copied-flash');
+                    }, 300);
+
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
+        });
+    }
+    
     if (modal && modalImg) {
         // Click Image to Zoom
         modalImg.addEventListener('click', function (e) {
@@ -1027,4 +1059,5 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Time Copied to clipboard!', 'success');
     });
 });
+
 
