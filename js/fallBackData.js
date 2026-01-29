@@ -60,16 +60,16 @@ function getEmbeddedData() {
                 version: "2.1",
                 released: "18-12-2025",
                 description: "To open The AhmosApp Data File",
-                link32: "https://www.mediafire.com/file/q63mewytlzwoilg/AhmosKey_V2.1_32x_18-12-2025.rar/file",
-                link64: "https://www.mediafire.com/file/08s5fr37v1n8by4/AhmosKey_V2.1_64x_18-12-2025.rar/file"
+                link32: "",
+                link64: ""
             },
             {
                 name: "Ahmos App",
                 version: "7.3",
                 released: "05-01-2026",
                 description: "Automate many Wasl operations",
-                link32: "https://www.mediafire.com/file/83gv8kp42yewmx5/AhmosApp_V7.3_32x_05-01-2026.rar/file",
-                link64: "https://www.mediafire.com/file/sdiut73o35d35gk/AhmosApp_V7.3_64x_05-01-2026.rar/file"
+                link32: "",
+                link64: ""
             },
             {
                 name: "Ahmos DataBase",
@@ -452,4 +452,5 @@ function getEmbeddedData() {
             }
         ]
     };
+
 }
