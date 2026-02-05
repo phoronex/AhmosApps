@@ -508,7 +508,192 @@ function copyToClipboard(text) {
     });
 }
 
+function getDateFormats(dateInput) {
+    // Create Date object from input
+    let date;
+    
+    if (dateInput instanceof Date) {
+        date = dateInput;
+    } else if (typeof dateInput === 'string' || typeof dateInput === 'number') {
+        date = new Date(dateInput);
+    } else {
+        console.error('Invalid date input. Please provide a Date object, timestamp, or date string.');
+        return null;
+    }
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+        console.error('Invalid date provided.');
+        return null;
+    }
+    
+    // Helper function to pad numbers
+    const pad = (num) => num.toString().padStart(2, '0');
+    const padYear = (num) => num.toString().padStart(4, '0');
+    
+    // Extract date components
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // 0-indexed
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const milliseconds = date.getMilliseconds();
+    
+    // Day and month names
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
+                       'August', 'September', 'October', 'November', 'December'];
+    const shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    // 24-hour time formats
+    const time24 = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    const time24Short = `${pad(hours)}:${pad(minutes)}`;
+    
+    // 12-hour time formats
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const hours12 = hours % 12 || 12;
+    const time12 = `${pad(hours12)}:${pad(minutes)}:${pad(seconds)} ${period}`;
+    const time12Short = `${pad(hours12)}:${pad(minutes)} ${period}`;
+    
+    // Different date formats
+    const formats = {
+        // ISO formats
+        iso8601: date.toISOString(),
+        isoDate: `${padYear(year)}-${pad(month)}-${pad(day)}`,
+        
+        // Standard formats
+        standard: date.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        }),
+        standardShort: date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        }),
+        
+        // USA formats
+        usSlash: `${pad(month)}/${pad(day)}/${year}`,
+        usSlashFull: `${pad(month)}/${pad(day)}/${year} ${time12Short}`,
+        usFull: `${monthNames[month-1]} ${day}, ${year}`,
+        usFullWithTime: `${monthNames[month-1]} ${day}, ${year} at ${time12Short}`,
+        
+        // European formats
+        euSlash: `${pad(day)}/${pad(month)}/${year}`,
+        euDot: `${pad(day)}.${pad(month)}.${year}`,
+        euDash: `${pad(day)}-${pad(month)}-${year}`,
+        euFull: `${day} ${monthNames[month-1]} ${year}`,
+        
+        // Asian formats
+        asian: `${year}年${month}月${day}日`,
+        asianShort: `${year}/${pad(month)}/${pad(day)}`,
+        
+        // File/folder friendly formats
+        fileSystem: `${year}-${pad(month)}-${pad(day)}_${pad(hours)}-${pad(minutes)}`,
+        fileSystemShort: `${year}${pad(month)}${pad(day)}_${pad(hours)}${pad(minutes)}`,
+        
+        // Database formats
+        sqlDateTime: `${year}-${pad(month)}-${pad(day)} ${time24}`,
+        sqlDate: `${year}-${pad(month)}-${pad(day)}`,
+        
+        // Readable formats
+        readable: `${dayNames[date.getDay()]}, ${monthNames[month-1]} ${day}, ${year}`,
+        readableWithTime: `${dayNames[date.getDay()]}, ${monthNames[month-1]} ${day}, ${year} at ${time12Short}`,
+        
+        // Short formats
+        short: `${pad(month)}/${pad(day)}/${year.toString().slice(2)}`,
+        veryShort: `${month}/${day}/${year.toString().slice(2)}`,
+        
+        // Time-only formats
+        timeOnly24: time24,
+        timeOnly12: time12Short,
+        
+        // Unix timestamp
+        unixTimestamp: Math.floor(date.getTime() / 1000),
+        jsTimestamp: date.getTime(),
+        
+        // RFC formats
+        rfc2822: date.toUTCString(),
+        rfc3339: date.toISOString(),
+        
+        // Custom combinations
+        yyyymmdd: `${year}${pad(month)}${pad(day)}`,
+        ddmmyyyy: `${pad(day)}${pad(month)}${year}`,
+        mmddyyyy: `${pad(month)}${pad(day)}${year}`,
+        
+        // With milliseconds
+        withMs: `${year}-${pad(month)}-${pad(day)} ${time24}.${milliseconds}`,
+        
+        // Relative time (for reference)
+        relative: new Date().toLocaleDateString() === date.toLocaleDateString() ? 
+                 'Today' : 
+                 Math.floor((new Date() - date) / (1000 * 60 * 60 * 24)) + ' days ago'
+    };
+    
+    // Display in console with formatting
+    console.log('%c📅 DATE FORMATS OUTPUT', 'color: #3498db; font-size: 14px; font-weight: bold;');
+    console.log(`%cInput Date: ${date.toString()}`, 'color: #2c3e50;');
+    console.log('');
+    
+    console.group('%c📊 COMMON FORMATS', 'color: #27ae60; font-weight: bold;');
+    console.log(`ISO 8601:        ${formats.iso8601}`);
+    console.log(`Standard:        ${formats.standard}`);
+    console.log(`US (MM/DD/YYYY): ${formats.usSlash}`);
+    console.log(`EU (DD/MM/YYYY): ${formats.euSlash}`);
+    console.groupEnd();
+    
+    console.group('%c⏰ TIME FORMATS', 'color: #e74c3c; font-weight: bold;');
+    console.log(`12-hour: ${formats.timeOnly12}`);
+    console.log(`24-hour: ${formats.timeOnly24}`);
+    console.log(`SQL DateTime: ${formats.sqlDateTime}`);
+    console.groupEnd();
+    
+    console.group('%c💾 TECHNICAL FORMATS', 'color: #9b59b6; font-weight: bold;');
+    console.log(`File System:    ${formats.fileSystem}`);
+    console.log(`Unix Timestamp: ${formats.unixTimestamp}`);
+    console.log(`JS Timestamp:   ${formats.jsTimestamp}`);
+    console.log(`YYYYMMDD:       ${formats.yyyymmdd}`);
+    console.groupEnd();
+    
+    console.group('%c📋 ALL FORMATS', 'color: #f39c12; font-weight: bold;');
+    Object.entries(formats).forEach(([key, value]) => {
+        console.log(`${key.padEnd(20)}: ${value}`);
+    });
+    console.groupEnd();
+    
+    console.log('%c✨ All formats logged successfully!', 'color: #2ecc71; font-weight: bold;');
+    
+    return formats;
+}
+/*
+// Usage examples:
+console.log('=== Example 1: Current Date ===');
+getDateFormats(new Date());
 
+console.log('\n=== Example 2: Specific Date String ===');
+getDateFormats('2024-12-25');
+
+console.log('\n=== Example 3: Timestamp ===');
+getDateFormats(1704038400000); // Dec 31, 2023 timestamp
+
+console.log('\n=== Example 4: Various Input Formats ===');
+getDateFormats('December 25, 2024');
+getDateFormats('2024/12/25');
+getDateFormats('12-25-2024');
+
+// Function to test with specific date
+function testDateFormats() {
+    const testDate = new Date(2024, 11, 25, 14, 30, 45); // Dec 25, 2024, 2:30:45 PM
+    console.log('\n=== Example 5: Christmas 2024 ===');
+    return getDateFormats(testDate);
+}
+
+// Run test
+testDateFormats();
+*/
 function loadAboutImages() {
     const container = document.getElementById('aboutImages');
 
@@ -521,7 +706,7 @@ function loadAboutImages() {
     });
 }
 // Copyright years
-const startYear = 2011;
+const startYear = 2021;
 const currentYear = new Date().getFullYear();
 document.getElementById('copyrightYears').textContent = startYear === currentYear ? currentYear : `${startYear}-${currentYear}`;
 
@@ -1059,6 +1244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Time Copied to clipboard!', 'success');
     });
 });
+
 
 
 
