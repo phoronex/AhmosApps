@@ -1020,23 +1020,52 @@ function loadBookmarklets() {
 */
 // Load Bookmarklets
 function loadBookmarklets() {
-    const container = document.getElementById('bookmarkletsContainer');
+  const container = document.getElementById('bookmarkletsContainer');
 
-    DATA.bookmarklets.forEach((bookmarklet, index) => {
-        const item = document.createElement('div');
-        item.className = 'bookmarklet-item';
+  DATA.bookmarklets.forEach((bookmarklet, index) => {
+    // Decode the stored Base64 back to raw JS
+    const rawCode = decodeURIComponent(escape(atob(bookmarklet.code)));
 
-        item.innerHTML = `
-                    <div class="bookmarklet-title">${bookmarklet.title}</div>
-                    <div class="bookmarklet-description">${bookmarklet.description}</div>
-                    <div class="bookmarklet-code">${bookmarklet.code}</div>
-                    <div class="bookmarklet-actions">
-                        <button class="btn btn-primary copy-btn" onclick="copyBookmarklet(${index}, this)">📋 Copy Code</button>
-                        <a href="${bookmarklet.code}" class="btn btn-bookmark" onclick="return false;" ondragstart="return true;">📌 Drag to Bookmarks Bar</a>
-                    </div>
-                `;
-        container.appendChild(item);
-    });
+    const item = document.createElement('div');
+    item.className = 'bookmarklet-item';
+
+    // Use textContent for display — never innerHTML with raw code
+    const titleEl = document.createElement('div');
+    titleEl.className = 'bookmarklet-title';
+    titleEl.textContent = bookmarklet.title;
+
+    const descEl = document.createElement('div');
+    descEl.className = 'bookmarklet-description';
+    descEl.textContent = bookmarklet.description;
+
+    const codeEl = document.createElement('div');
+    codeEl.className = 'bookmarklet-code';
+    codeEl.textContent = rawCode;  // shows raw JS safely, no injection
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'btn btn-primary copy-btn';
+    copyBtn.textContent = '📋 Copy Code';
+    copyBtn.onclick = () => copyBookmarklet(index, rawCode);
+
+    const dragLink = document.createElement('a');
+    dragLink.className = 'btn btn-bookmark';
+    dragLink.href = rawCode;       // decoded JS goes in href — works perfectly
+    dragLink.textContent = '📌 Drag to Bookmarks Bar';
+    dragLink.onclick = () => false;
+    dragLink.ondragstart = () => true;
+
+    const actions = document.createElement('div');
+    actions.className = 'bookmarklet-actions';
+    actions.appendChild(copyBtn);
+    actions.appendChild(dragLink);
+
+    item.appendChild(titleEl);
+    item.appendChild(descEl);
+    item.appendChild(codeEl);
+    item.appendChild(actions);
+
+    container.appendChild(item);
+  });
 }
 /*
 // Copy bookmarklet code
@@ -1056,22 +1085,17 @@ function copyBookmarklet(index) {
     });
 }
 */
-function copyBookmarklet(index, btn) {
-    const code = DATA.bookmarklets[index].code;
-
-    navigator.clipboard.writeText(code).then(() => {
-        // Safe: Handled directly via the button argument passed from HTML
-        const originalText = btn.textContent;
-        btn.textContent = '✓ Copied!';
-        btn.classList.add('copied');
-
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.classList.remove('copied');
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy text: ', err);
-    });
+function copyBookmarklet(index, rawCode) {
+  navigator.clipboard.writeText(rawCode).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
 }
 
 // Load Links
