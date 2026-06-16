@@ -260,6 +260,7 @@ function getEmbeddedData() {
         ],
 
         bookmarklets: [
+            /*
               {
                 "title": "🔂 Html Text Replacer",
                 "description": "This bookmarklet allows you to search and replace text on an html web page.",
@@ -275,7 +276,8 @@ function getEmbeddedData() {
                 "description": "This bookmarklet formats and displays JSON data in a readable format on the current page. Useful for developers working with APIs.",
                 "code": "javascript:(function(){try{const data=prompt('Paste your JSON:');if(data){const formatted=JSON.stringify(JSON.parse(data),null,2);const w=window.open('');w.document.write('<pre>'+formatted+'</pre>');}}catch(e){alert('Invalid JSON: '+e.message);}})();"
               }
-        /*
+        
+        */
             {
                 title: "Toggle Flowise Chatbot Visibility",
                 description: "This bookmarklet allows you to hide or show the Flowise chatbot widget on any webpage. Simply click the bookmark to toggle the visibility. Perfect for taking screenshots or presenting without distractions.",
@@ -287,7 +289,7 @@ function getEmbeddedData() {
                 code: "javascript:(function(){try{const data=prompt('Paste your JSON:');if(data){const formatted=JSON.stringify(JSON.parse(data),null,2);const w=window.open('');w.document.write('<pre>'+formatted+'</pre>');}}catch(e){alert('Invalid JSON: '+e.message);}})();"
             }
         
-        */
+        
         ],
         links: [
             /*
