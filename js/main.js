@@ -1031,7 +1031,7 @@ function loadBookmarklets() {
                     <div class="bookmarklet-description">${bookmarklet.description}</div>
                     <div class="bookmarklet-code">${bookmarklet.code}</div>
                     <div class="bookmarklet-actions">
-                        <button class="btn btn-primary copy-btn" onclick="copyBookmarklet(${index})">📋 Copy Code</button>
+                        <button class="btn btn-primary copy-btn" onclick="copyBookmarklet(${index}, this)">📋 Copy Code</button>
                         <a href="${bookmarklet.code}" class="btn btn-bookmark" onclick="return false;" ondragstart="return true;">📌 Drag to Bookmarks Bar</a>
                     </div>
                 `;
