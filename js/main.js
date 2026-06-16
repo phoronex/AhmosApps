@@ -997,6 +997,7 @@ function toggleDetails(index) {
 }
 
 // Load Bookmarklets
+/*
 function loadBookmarklets() {
     const container = document.getElementById('bookmarkletsContainer');
 
@@ -1016,7 +1017,27 @@ function loadBookmarklets() {
         container.appendChild(item);
     });
 }
+*/
+// Load Bookmarklets
+function loadBookmarklets() {
+    const container = document.getElementById('bookmarkletsContainer');
 
+    DATA.bookmarklets.forEach((bookmarklet, index) => {
+        const item = document.createElement('div');
+        item.className = 'bookmarklet-item';
+
+        item.innerHTML = `
+                    <div class="bookmarklet-title">${bookmarklet.title}</div>
+                    <div class="bookmarklet-description">${bookmarklet.description}</div>
+                    <div class="bookmarklet-code">${bookmarklet.code}</div>
+                    <div class="bookmarklet-actions">
+                        <button class="btn btn-primary copy-btn" onclick="copyBookmarklet(${index})">📋 Copy Code</button>
+                        <a href="${bookmarklet.code}" class="btn btn-bookmark" onclick="return false;" ondragstart="return true;">📌 Drag to Bookmarks Bar</a>
+                    </div>
+                `;
+        container.appendChild(item);
+    });
+}
 // Copy bookmarklet code
 function copyBookmarklet(index) {
     const code = DATA.bookmarklets[index].code;
