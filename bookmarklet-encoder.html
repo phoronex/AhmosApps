@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bookmarklet Encoder / Decoder</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0f1117;
+    --surface:  #1a1d27;
+    --card:     #21253a;
+    --border:   #2e3352;
+    --accent:   #5c6bff;
+    --accent2:  #a78bfa;
+    --success:  #34d399;
+    --danger:   #f87171;
+    --warn:     #fbbf24;
+    --text:     #e2e8f8;
+    --muted:    #7a82a8;
+    --mono:     'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    --sans:     'Inter', system-ui, sans-serif;
+    --radius:   10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  /* ── Layout ── */
+  .wrap { max-width: 820px; margin: 0 auto; }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2.5rem;
+  }
+
+  .logo {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  header h1 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  header p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-label .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  textarea, .output-box {
+    width: 100%;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  textarea { height: 140px; }
+  textarea:focus { border-color: var(--accent); }
+
+  .output-box {
+    min-height: 80px;
+    max-height: 200px;
+    overflow-y: auto;
+    word-break: break-all;
+    white-space: pre-wrap;
+    user-select: all;
+    cursor: text;
+  }
+
+  /* ── Action row ── */
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  }
+
+  button:hover  { background: #2a2f4a; border-color: #4a5080; }
+  button:active { transform: scale(0.97); }
+
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  button.primary:hover { background: #4a59ee; border-color: #4a59ee; }
+
+  button.success-flash {
+    background: var(--success);
+    border-color: var(--success);
+    color: #0a2a1e;
+  }
+
+  button.danger {
+    background: transparent;
+    border-color: #f87171aa;
+    color: var(--danger);
+  }
+  button.danger:hover { background: #f871711a; }
+
+  .badge {
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: opacity 0.3s;
+  }
+  .badge.ok   { background: #34d39922; color: var(--success); }
+  .badge.err  { background: #f8717122; color: var(--danger); }
+  .badge.warn { background: #fbbf2422; color: var(--warn); }
+  .badge.hide { opacity: 0; pointer-events: none; }
+
+  /* ── Divider with label ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 1.5rem 0;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Mode tabs ── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+  .tab:hover  { background: var(--card); color: var(--text); }
+  .tab.active {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* ── Info / tip box ── */
+  .tip {
+    background: #5c6bff12;
+    border: 1px solid #5c6bff40;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #a8b4f8;
+    line-height: 1.7;
+    margin-top: 1rem;
+  }
+  .tip strong { color: #c4ccff; }
+  .tip code {
+    font-family: var(--mono);
+    background: #ffffff14;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
+  /* ── Stats strip ── */
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 11.5px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .stats span b { color: var(--text); font-weight: 600; }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 520px) {
+    .actions { flex-direction: column; align-items: stretch; }
+    button { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">🔐</div>
+    <div>
+      <h1>Bookmarklet Encoder / Decoder</h1>
+      <p>Convert raw JS ↔ Base64 for safe JSON storage</p>
+    </div>
+  </header>
+
+  <!-- Mode tabs -->
+  <div class="tabs">
+    <button class="tab active" id="tab-encode" onclick="switchTab('encode')">⬆ Encode — JS → Base64</button>
+    <button class="tab" id="tab-decode" onclick="switchTab('decode')">⬇ Decode — Base64 → JS</button>
+    <button class="tab" id="tab-verify" onclick="switchTab('verify')">✔ Verify round-trip</button>
+  </div>
+
+  <!-- ─── ENCODE TAB ─── -->
+  <div id="panel-encode">
+    <div class="card">
+      <div class="card-label"><span class="dot"></span>Raw JavaScript bookmarklet</div>
+      <textarea id="enc-input" placeholder="Paste your raw javascript:(function(){...})(); here" oninput="onEncInput()"></textarea>
+      <div class="stats" id="enc-stats" style="display:none">
+        Chars: <b id="enc-chars">0</b> &nbsp;|&nbsp; Bytes: <b id="enc-bytes">0</b>
+      </div>
+      <div class="actions">
+        <button class="primary" onclick="doEncode()">⬆ Encode to Base64</button>
+        <button onclick="clearField('enc-input','enc-output'); document.getElementById('enc-stats').style.display='none'">✕ Clear</button>
+        <button onclick="pasteInto('enc-input')">📋 Paste</button>
+        <span class="badge hide" id="enc-badge"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span class="dot" style="background:var(--success)"></span>Base64 output — paste this as your JSON "code" value</div>
+      <div class="output-box" id="enc-output">Result appears here…</div>
+      <div class="actions">
+        <button onclick="copyOut('enc-output', this)">📋 Copy</button>
+        <button onclick="downloadTxt('enc-output', 'bookmarklet-encoded.txt')">💾 Save .txt</button>
+        <button onclick="generateJson()">{ } Wrap in JSON snippet</button>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>In your JSON file:</strong> paste the Base64 string as the <code>"code"</code> value.<br>
+      <strong>In your loader:</strong> decode with <code>decodeURIComponent(escape(atob(bookmarklet.code)))</code> before using.
+    </div>
+  </div>
+
+  <!-- ─── DECODE TAB ─── -->
+  <div id="panel-decode" style="display:none">
+    <div class="card">
+      <div class="card-label"><span class="dot" style="background:var(--accent2)"></span>Base64 string to decode</div>
+      <textarea id="dec-input" placeholder="Paste Base64-encoded bookmarklet here…" oninput="onDecInput()"></textarea>
+      <div class="actions">
+        <button class="primary" onclick="doDecode()">⬇ Decode to JS</button>
+        <button onclick="clearField('dec-input','dec-output')">✕ Clear</button>
+        <button onclick="pasteInto('dec-input')">📋 Paste</button>
+        <span class="badge hide" id="dec-badge"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><span class="dot" style="background:var(--success)"></span>Decoded JavaScript</div>
+      <div class="output-box" id="dec-output">Result appears here…</div>
+      <div class="stats" id="dec-stats" style="display:none">
+        Chars: <b id="dec-chars">0</b> &nbsp;|&nbsp; Starts with javascript: <b id="dec-valid">—</b>
+      </div>
+      <div class="actions">
+        <button onclick="copyOut('dec-output', this)">📋 Copy</button>
+        <button onclick="downloadTxt('dec-output', 'bookmarklet-decoded.js')">💾 Save .js</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── VERIFY TAB ─── -->
+  <div id="panel-verify" style="display:none">
+    <div class="card">
+      <div class="card-label"><span class="dot" style="background:var(--warn)"></span>Paste raw JS — we'll encode then decode and check they match</div>
+      <textarea id="ver-input" placeholder="Paste raw bookmarklet JS here…"></textarea>
+      <div class="actions">
+        <button class="primary" onclick="doVerify()">✔ Verify round-trip</button>
+        <button onclick="clearField('ver-input','ver-output')">✕ Clear</button>
+        <span class="badge hide" id="ver-badge"></span>
+      </div>
+    </div>
+
+    <div class="card" id="ver-result-card" style="display:none">
+      <div class="card-label"><span class="dot" style="background:var(--warn)"></span>Verification report</div>
+      <div class="output-box" id="ver-output" style="font-size:12px;line-height:1.8"></div>
+    </div>
+  </div>
+
+  <div class="divider">quick reference</div>
+
+  <div class="card">
+    <div class="card-label"><span class="dot" style="background:var(--warn)"></span>Loader snippet — paste into your loadBookmarklets()</div>
+    <div class="output-box" style="font-size:12px; height:auto; max-height:none; user-select:all">const rawCode = decodeURIComponent(escape(atob(bookmarklet.code)));
+
+// Use rawCode for:
+//   dragLink.href = rawCode;               ← drag-to-bookmarks bar
+//   navigator.clipboard.writeText(rawCode) ← copy button
+//   codeEl.textContent = rawCode;          ← display (never innerHTML)</div>
+  </div>
+
+  <footer>
+    Bookmarklet Encoder / Decoder &nbsp;·&nbsp; All processing happens locally in your browser — nothing is sent to any server.
+  </footer>
+
+</div>
+<script>
+/* ── Tab switching ── */
+function switchTab(name) {
+  ['encode','decode','verify'].forEach(function(t) {
+    document.getElementById('panel-'+t).style.display = t === name ? '' : 'none';
+    document.getElementById('tab-'+t).classList.toggle('active', t === name);
+  });
+}
+
+/* ── Core encode / decode ── */
+function b64encode(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64decode(str) {
+  return decodeURIComponent(escape(atob(str.trim())));
+}
+
+/* ── Encode tab ── */
+function onEncInput() {
+  var v = document.getElementById('enc-input').value;
+  var stats = document.getElementById('enc-stats');
+  if (v.length > 0) {
+    stats.style.display = 'flex';
+    document.getElementById('enc-chars').textContent = v.length.toLocaleString();
+    document.getElementById('enc-bytes').textContent = new Blob([v]).size.toLocaleString();
+  } else {
+    stats.style.display = 'none';
+  }
+}
+
+function doEncode() {
+  var raw = document.getElementById('enc-input').value.trim();
+  if (!raw) { showBadge('enc-badge', 'Paste some JS first', 'err'); return; }
+  try {
+    var b64 = b64encode(raw);
+    document.getElementById('enc-output').textContent = b64;
+    showBadge('enc-badge', '✓ Encoded — ' + b64.length.toLocaleString() + ' chars', 'ok');
+  } catch(e) {
+    showBadge('enc-badge', 'Encode failed: ' + e.message, 'err');
+  }
+}
+
+/* ── Decode tab ── */
+function onDecInput() {}
+
+function doDecode() {
+  var b64 = document.getElementById('dec-input').value.trim();
+  if (!b64) { showBadge('dec-badge', 'Paste a Base64 string first', 'err'); return; }
+  try {
+    var decoded = b64decode(b64);
+    document.getElementById('dec-output').textContent = decoded;
+    var stats = document.getElementById('dec-stats');
+    stats.style.display = 'flex';
+    document.getElementById('dec-chars').textContent = decoded.length.toLocaleString();
+    var isValid = decoded.startsWith('javascript:');
+    document.getElementById('dec-valid').textContent = isValid ? '✓ Yes' : '✗ No';
+    document.getElementById('dec-valid').style.color = isValid ? 'var(--success)' : 'var(--danger)';
+    showBadge('dec-badge', '✓ Decoded', 'ok');
+  } catch(e) {
+    showBadge('dec-badge', 'Invalid Base64', 'err');
+    document.getElementById('dec-output').textContent = 'Error: ' + e.message;
+  }
+}
+
+/* ── Verify tab ── */
+function doVerify() {
+  var raw = document.getElementById('ver-input').value.trim();
+  if (!raw) { showBadge('ver-badge', 'Paste JS first', 'err'); return; }
+
+  var card = document.getElementById('ver-result-card');
+  var out  = document.getElementById('ver-output');
+  card.style.display = '';
+
+  try {
+    var encoded = b64encode(raw);
+    var decoded = b64decode(encoded);
+    var match   = raw === decoded;
+    var isBookmarklet = raw.startsWith('javascript:');
+    var hasUnicode = /[^\x00-\x7F]/.test(raw);
+
+    var lines = [];
+    lines.push((match ? '✓' : '✗') + '  Round-trip match:   ' + (match ? 'PASS — identical' : 'FAIL — mismatch detected'));
+    lines.push((isBookmarklet ? '✓' : '⚠') + '  Starts with javascript:  ' + (isBookmarklet ? 'Yes' : 'No (may not be a bookmarklet)'));
+    lines.push('ℹ  Unicode characters:  ' + (hasUnicode ? 'Yes (UTF-8 safe encoding used)' : 'None (ASCII only)'));
+    lines.push('ℹ  Original length:     ' + raw.length.toLocaleString() + ' chars');
+    lines.push('ℹ  Encoded length:      ' + encoded.length.toLocaleString() + ' chars');
+    lines.push('ℹ  Size overhead:       +' + Math.round((encoded.length / raw.length - 1) * 100) + '% (normal for Base64)');
+    lines.push('');
+    lines.push('Base64 preview (first 120 chars):');
+    lines.push(encoded.substring(0, 120) + (encoded.length > 120 ? '…' : ''));
+
+    out.textContent = lines.join('\n');
+    showBadge('ver-badge', match ? '✓ All checks passed' : '✗ Mismatch', match ? 'ok' : 'err');
+  } catch(e) {
+    out.textContent = 'Error during verification: ' + e.message;
+    showBadge('ver-badge', 'Error', 'err');
+  }
+}
+
+/* ── Generate JSON snippet ── */
+function generateJson() {
+  var b64 = document.getElementById('enc-output').textContent.trim();
+  if (!b64 || b64 === 'Result appears here…') {
+    showBadge('enc-badge', 'Encode first', 'err'); return;
+  }
+  var snippet = JSON.stringify({
+    title: "My Bookmarklet",
+    description: "Description here",
+    code: b64
+  }, null, 2);
+  var win = window.open('', '_blank', 'width=600,height=400');
+  win.document.write('<html><head><title>JSON snippet</title></head><body style="background:#0f1117;color:#e2e8f8;font-family:monospace;font-size:13px;padding:20px;white-space:pre">' + escapeHtml(snippet) + '</body></html>');
+}
+
+/* ── Utilities ── */
+function showBadge(id, msg, type) {
+  var b = document.getElementById(id);
+  b.textContent = msg;
+  b.className = 'badge ' + type;
+  clearTimeout(b._t);
+  b._t = setTimeout(function(){ b.className = 'badge hide'; }, 3500);
+}
+
+function copyOut(id, btn) {
+  var txt = document.getElementById(id).textContent;
+  if (!txt || txt === 'Result appears here…') return;
+  navigator.clipboard.writeText(txt).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('success-flash');
+    setTimeout(function(){ btn.textContent = orig; btn.classList.remove('success-flash'); }, 2000);
+  });
+}
+
+function clearField() {
+  for (var i = 0; i < arguments.length; i++) {
+    var el = document.getElementById(arguments[i]);
+    if (!el) continue;
+    if (el.tagName === 'TEXTAREA') el.value = '';
+    else el.textContent = 'Result appears here…';
+  }
+}
+
+function pasteInto(id) {
+  navigator.clipboard.readText().then(function(txt) {
+    document.getElementById(id).value = txt;
+    onEncInput();
+  }).catch(function() {
+    alert('Clipboard access denied. Please paste manually (Ctrl+V / Cmd+V).');
+  });
+}
+
+function downloadTxt(id, filename) {
+  var txt = document.getElementById(id).textContent;
+  if (!txt || txt === 'Result appears here…') return;
+  var a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+  a.download = filename;
+  a.click();
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
