@@ -1038,6 +1038,7 @@ function loadBookmarklets() {
         container.appendChild(item);
     });
 }
+/*
 // Copy bookmarklet code
 function copyBookmarklet(index) {
     const code = DATA.bookmarklets[index].code;
@@ -1052,6 +1053,24 @@ function copyBookmarklet(index) {
             btn.textContent = originalText;
             btn.classList.remove('copied');
         }, 2000);
+    });
+}
+*/
+function copyBookmarklet(index, btn) {
+    const code = DATA.bookmarklets[index].code;
+
+    navigator.clipboard.writeText(code).then(() => {
+        // Safe: Handled directly via the button argument passed from HTML
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copied');
+
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('copied');
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
     });
 }
 
