@@ -7,11 +7,11 @@
   {
     "title": "Toggle Flowise Chatbot Visibility",
     "description": "This bookmarklet allows you to hide or show the Flowise chatbot widget on any webpage. Simply click the bookmark to toggle the visibility. Perfect for taking screenshots or presenting without distractions.",
-    "code": "javascript:(function(){const e=document.querySelector('flowise-chatbot');if(!e)return alert('Flowise not found');const s=e.style.display==='none';e.style.display=s?'':'none';if(e.shadowRoot){const r=e.shadowRoot;r.host.style.display=s?'':'none';const t=r.querySelectorAll('*');t.forEach(x=>x.style.display=s?'':'none');}console.log('Flowise '+ (s?'shown':'hidden'));})();"
+    "code": "amF2YXNjcmlwdDooZnVuY3Rpb24oKXtjb25zdCBlPWRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ2Zsb3dpc2UtY2hhdGJvdCcpO2lmKCFlKXJldHVybiBhbGVydCgnRmxvd2lzZSBub3QgZm91bmQnKTtjb25zdCBzPWUuc3R5bGUuZGlzcGxheT09PSdub25lJztlLnN0eWxlLmRpc3BsYXk9cz8nJzonbm9uZSc7aWYoZS5zaGFkb3dSb290KXtjb25zdCByPWUuc2hhZG93Um9vdDtyLmhvc3Quc3R5bGUuZGlzcGxheT1zPycnOidub25lJztjb25zdCB0PXIucXVlcnlTZWxlY3RvckFsbCgnKicpO3QuZm9yRWFjaCh4PT54LnN0eWxlLmRpc3BsYXk9cz8nJzonbm9uZScpO31jb25zb2xlLmxvZygnRmxvd2lzZSAnKyAocz8nc2hvd24nOidoaWRkZW4nKSk7fSkoKTs="
   },
   {
     "title": "Example JSON Viewer",
     "description": "This bookmarklet formats and displays JSON data in a readable format on the current page. Useful for developers working with APIs.",
-    "code": "javascript:(function(){try{const data=prompt('Paste your JSON:');if(data){const formatted=JSON.stringify(JSON.parse(data),null,2);const w=window.open('');w.document.write('<pre>'+formatted+'</pre>');}}catch(e){alert('Invalid JSON: '+e.message);}})();"
+    "code": "amF2YXNjcmlwdDooZnVuY3Rpb24oKXt0cnl7Y29uc3QgZGF0YT1wcm9tcHQoJ1Bhc3RlIHlvdXIgSlNPTjonKTtpZihkYXRhKXtjb25zdCBmb3JtYXR0ZWQ9SlNPTi5zdHJpbmdpZnkoSlNPTi5wYXJzZShkYXRhKSxudWxsLDIpO2NvbnN0IHc9d2luZG93Lm9wZW4oJycpO3cuZG9jdW1lbnQud3JpdGUoJzxwcmU+Jytmb3JtYXR0ZWQrJzwvcHJlPicpO319Y2F0Y2goZSl7YWxlcnQoJ0ludmFsaWQgSlNPTjogJytlLm1lc3NhZ2UpO319KSgpOw=="
   }
 ]
