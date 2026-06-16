@@ -1051,8 +1051,8 @@ function loadBookmarklets() {
     dragLink.className = 'btn btn-bookmark';
     dragLink.href = rawCode;       // decoded JS goes in href — works perfectly
     dragLink.title = bookmarklet.title; // 👈 THIS SETS THE BOOKMARK NAME  
-    // dragLink.textContent = '📌 Drag to Bookmarks Bar';
-    dragLink.textContent = bookmarklet.title;  
+    dragLink.textContent = '📌 Drag to Bookmarks Bar';
+    // dragLink.textContent = bookmarklet.title;  
     dragLink.onclick = () => false;
     dragLink.ondragstart = () => true;
 
