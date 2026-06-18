@@ -1018,14 +1018,28 @@ function loadBookmarklets() {
     });
 }
 */
+// Auto-detects encoded vs raw and always returns raw JS
+function resolveCode(code) {
+  if (!code) return '';
+  const trimmed = code.trim();
+  // Raw bookmarklet — already usable as-is
+  if (trimmed.startsWith('javascript:')) return trimmed;
+  // Base64 encoded — decode it
+  try {
+    return decodeURIComponent(escape(atob(trimmed)));
+  } catch (e) {
+    console.warn('Bookmarklet decode failed, using raw:', e);
+    return trimmed; // fallback: use whatever is there
+  }
+}
 // Load Bookmarklets
 function loadBookmarklets() {
   const container = document.getElementById('bookmarkletsContainer');
 
   DATA.bookmarklets.forEach((bookmarklet, index) => {
     // Decode the stored Base64 back to raw JS
-    const rawCode = decodeURIComponent(escape(atob(bookmarklet.code)));
-
+    // const rawCode = decodeURIComponent(escape(atob(bookmarklet.code)));
+    const rawCode = resolveCode(bookmarklet.code);
     const item = document.createElement('div');
     item.className = 'bookmarklet-item';
 
